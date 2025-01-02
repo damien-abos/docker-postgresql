@@ -19,23 +19,23 @@ This image use a [LinuxServer.io](https://linuxserver.io) container base image f
 ## TL;DR
 
 ```console
-docker run --name postgresql dabos/postgresql:latest
+docker run --name postgresql ghcr.io/damien-abos/docker-postgresql:main
 ```
 
 **Warning**: This quick setup is only intended for development environments. You are encouraged to change the insecure default credentials and check out the available configuration options in the [Configuration](#configuration) section for a more secure deployment.
 
 ## Get this image
 
-The recommended way to get the Bitnami PostgreSQL Docker Image is to pull the prebuilt image from the [Docker Hub Registry](https://hub.docker.com/r/dabos/postgresql).
+The recommended way to get the PostgreSQL Docker Image is to pull the prebuilt image from the [GitHub Container Registry](https://github.com/damien-abos/docker-postgresql/pkgs/container/docker-postgresql).
 
 ```console
-docker pull damien-abos/postgresql:latest
+docker pull ghcr.io/damien-abos/docker-postgresql:main
 ```
 
-To use a specific version, you can pull a versioned tag. You can view the [list of available versions](https://hub.docker.com/r/dabos/postgresql/tags/) in the Docker Hub Registry.
+To use a specific version, you can pull a versioned tag. You can view the [list of available versions](https://github.com/damien-abos/docker-postgresql/pkgs/container/docker-postgresql) in the Docker Hub Registry.
 
 ```console
-docker pull damien-abos/postgresql:[TAG]
+docker pull ghcr.io/damien-abos/docker-postgresql:[TAG]
 ```
 
 ## Persisting your database
@@ -47,7 +47,7 @@ For persistence you should mount a directory at the `/config/postgresql` path. I
 ```console
 docker run \
     -v /path/to/postgresql-persistence:/config/postgresql \
-    dabos/postgresql:latest
+    ghcr.io/damien-abos/docker-postgresql:main
 ```
 
 > NOTE: As this is a non-root container, the mounted files and directories must have the proper permissions for the UID `911`.
@@ -77,7 +77,7 @@ docker run \
 By passing the `POSTGRESQL_DATABASE` environment variable when running the image for the first time, a database will be created. This is useful if your application requires that a database already exists, saving you from having to manually create the database using the PostgreSQL client.
 
 ```console
-docker run --name postgresql -e POSTGRESQL_DATABASE=my_database dabos/postgresql:latest
+docker run --name postgresql -e POSTGRESQL_DATABASE=my_database ghcr.io/damien-abos/docker-postgresql:main
 ```
 
 ### Creating a database user on first run
@@ -85,7 +85,7 @@ docker run --name postgresql -e POSTGRESQL_DATABASE=my_database dabos/postgresql
 You can also create a restricted database user that only has permissions for the database created with the [`POSTGRESQL_DATABASE`](#creating-a-database-on-first-run) environment variable. To do this, provide the `POSTGRESQL_USERNAME` environment variable.
 
 ```console
-docker run --name postgresql -e POSTGRESQL_USERNAME=my_user -e POSTGRESQL_PASSWORD=password123 -e POSTGRESQL_DATABASE=my_database dabos/postgresql:latest
+docker run --name postgresql -e POSTGRESQL_USERNAME=my_user -e POSTGRESQL_PASSWORD=password123 -e POSTGRESQL_DATABASE=my_database ghcr.io/damien-abos/docker-postgresql:main
 ```
 
 **Note!**
