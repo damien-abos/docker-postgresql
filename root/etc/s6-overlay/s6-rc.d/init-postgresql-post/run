@@ -1,0 +1,11 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+if [[ ! -f "${POSTGRESQL_DATA_DIR}/.init-postgresql-post" ]]; then
+    /bin/su - abc -s /bin/bash -c "/usr/bin/psql -U postgres -c \"CREATE DATABASE ${POSTGRESQL_DATABASE}\""
+    /bin/su - abc -s /bin/bash -c "/usr/bin/psql -U postgres -c \"CREATE USER ${POSTGRESQL_USERNAME} WITH PASSWORD '${POSTGRESQL_PASSWORD}'\""
+    /bin/su - abc -s /bin/bash -c "/usr/bin/psql -U postgres -c \"GRANT CONNECT ON DATABASE ${POSTGRESQL_DATABASE} TO ${POSTGRESQL_USERNAME}\""
+    /bin/su - abc -s /bin/bash -c "/usr/bin/psql -U postgres -c \"GRANT ALL PRIVILEGES ON DATABASE ${POSTGRESQL_DATABASE} TO ${POSTGRESQL_USERNAME}\""
+    /bin/su - abc -s /bin/bash -c "/usr/bin/psql -U ${POSTGRESQL_USERNAME} -c \"CREATE SCHEMA AUTHORIZATION ${POSTGRESQL_USERNAME}\""
+    /bin/su - abc -s /bin/bash -c "touch ${POSTGRESQL_DATA_DIR}/.init-postgresql-post"
+fi

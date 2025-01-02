@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+exec /bin/su - abc -s /bin/bash -c "/usr/bin/pg_ctl start --pgdata ${POSTGRESQL_DATA_DIR}"

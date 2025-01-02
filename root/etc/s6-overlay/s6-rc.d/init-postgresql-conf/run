@@ -1,0 +1,9 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+if [[ -f "${POSTGRESQL_DATA_DIR}/pg_hba.conf" ]]; then
+    if ! grep -q "# - Customization -" "${POSTGRESQL_DATA_DIR}/pg_hba.conf"; then
+        echo "# - Customization -" >> ${POSTGRESQL_DATA_DIR}/pg_hba.conf
+        echo "host ${POSTGRESQL_DATABASE} all 0.0.0.0/0 md5" >> ${POSTGRESQL_DATA_DIR}/pg_hba.conf
+    fi
+fi

@@ -1,0 +1,10 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+if [[ ! -f  "${POSTGRESQL_DATA_DIR}/postgresql.conf" ]]; then
+    PASSWORD_FILE=/tmp/.postgresql_initscripts_password
+    echo ${POSTGRESQL_INITSCRIPTS_PASSWORD} > $PASSWORD_FILE
+    lsiown abc:abc $PASSWORD_FILE
+    /bin/su - abc -s /bin/bash -c "/usr/bin/initdb --auth-local=trust --auth-host=md5 --allow-group-access --pgdata=${POSTGRESQL_DATA_DIR} --username=${POSTGRESQL_INITSCRIPTS_USERNAME} --pwfile=${PASSWORD_FILE} --set=log_destination='syslog' --set=listen_addresses='*' --set=port=${POSTGRESQL_PORT} ${POSTGRESQL_EXTRA_FLAGS}"
+    rm $PASSWORD_FILE
+fi
