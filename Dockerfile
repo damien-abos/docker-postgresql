@@ -39,7 +39,7 @@ ENV PGDATA=${POSTGRESQL_DATA_DIR}
 RUN \ 
   echo "**** install runtime packages ****" && \
   apk add -U --upgrade --no-cache \
-    libc6-compat \
+    gcompat \
     postgresql18 \
     postgresql18-jit && \
   echo "**** cleanup ****" && \
